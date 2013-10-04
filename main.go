@@ -55,12 +55,13 @@ func (dir UploadDir) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 		http.Error(w, "Need a file to upload.", 500)
 		return
 	}
+	defer f.Close()
+
 	if !SAFE.MatchString(hdr.Filename) {
 		http.Error(w, "Unsafe filename.", 400)
 		return
 	}
 
-	defer f.Close()
 	tmp, err := ioutil.TempFile(string(dir), ".tmp-")
 	if err != nil {
 		http.Error(w, "Cannot create temp file.", 500)
