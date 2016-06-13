@@ -11,7 +11,8 @@ import (
 	"os"
 	"path"
 	"path/filepath"
-	"regexp"
+
+	"github.com/tv42/adhoc-httpd-upload/internal"
 )
 
 var (
@@ -41,8 +42,6 @@ var TEMPLATE = template.Must(template.New("top").Parse(`
 </html>
 `))
 
-var SAFE = regexp.MustCompile(`^[a-zA-Z0-9]+(\.?[a-zA-Z0-9_-]+)+[a-zA-Z0-9]$`)
-
 type UploadDir string
 
 func (dir UploadDir) ServeHTTP(w http.ResponseWriter, req *http.Request) {
@@ -57,7 +56,7 @@ func (dir UploadDir) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 	}
 	defer f.Close()
 
-	if !SAFE.MatchString(hdr.Filename) {
+	if !internal.IsSafeName(hdr.Filename) {
 		http.Error(w, "Unsafe filename.", 400)
 		return
 	}
