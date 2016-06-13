@@ -42,9 +42,9 @@ var page = template.Must(template.New("top").Parse(`
 </html>
 `))
 
-type UploadDir string
+type uploadDir string
 
-func (dir UploadDir) ServeHTTP(w http.ResponseWriter, req *http.Request) {
+func (dir uploadDir) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 	if req.Method != "POST" {
 		page.Execute(w, nil)
 		return
@@ -100,7 +100,7 @@ func main() {
 	dir := flag.Arg(0)
 
 	log.Printf("Receiving uploads to %q at http://%s:%d/", dir, *host, *port)
-	http.Handle("/", UploadDir(dir))
+	http.Handle("/", uploadDir(dir))
 	addr := fmt.Sprintf("%s:%d", *host, *port)
 	err := http.ListenAndServe(addr, nil)
 	if err != nil {
