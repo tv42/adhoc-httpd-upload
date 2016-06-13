@@ -26,7 +26,7 @@ func usage() {
 	flag.PrintDefaults()
 }
 
-var TEMPLATE = template.Must(template.New("top").Parse(`
+var page = template.Must(template.New("top").Parse(`
 <html>
   <head>
     <title>Ad hoc file upload</title>
@@ -46,7 +46,7 @@ type UploadDir string
 
 func (dir UploadDir) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 	if req.Method != "POST" {
-		TEMPLATE.Execute(w, nil)
+		page.Execute(w, nil)
 		return
 	}
 	f, hdr, err := req.FormFile("f")
@@ -81,7 +81,7 @@ func (dir UploadDir) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 	}
 
 	log.Printf("Saved %q", hdr.Filename)
-	TEMPLATE.Execute(w, "Thanks!")
+	page.Execute(w, "Thanks!")
 }
 
 func main() {
