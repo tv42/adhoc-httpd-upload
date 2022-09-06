@@ -3,7 +3,7 @@ package internal_test
 import (
 	"testing"
 
-	"github.com/tv42/adhoc-httpd-upload/internal"
+	"eagain.net/go/adhoc-httpd-upload/internal"
 )
 
 func TestSafename(t *testing.T) {

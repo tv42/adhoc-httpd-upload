@@ -12,7 +12,7 @@ import (
 	"path"
 	"path/filepath"
 
-	"github.com/tv42/adhoc-httpd-upload/internal"
+	"eagain.net/go/adhoc-httpd-upload/internal"
 )
 
 var (
